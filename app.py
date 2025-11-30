@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -122,8 +123,7 @@
             return z;
         };
 
-        // Simulates a single day's stock price movement using Geometric Brownian Motion (GBM).
-        // Formula: P_t = P_{t-1} * exp( (mu - sigma^2 / 2) * dt + sigma * sqrt(dt) * Z )
+        // Geometric Brownian Motion Formula: P_t = P_{t-1} * exp( (mu - sigma^2 / 2) * dt + sigma * sqrt(dt) * Z )
         const simulateDailyPrice = (currentPrice, mu, sigma) => {
             const driftTerm = (mu - (sigma * sigma) / 2) * TIME_STEP;
             const volatilityTerm = sigma * Math.sqrt(TIME_STEP) * getNormalRandom();
