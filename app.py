@@ -4,43 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interactive Stock Forecaster</title>
+    <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Inter Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f7f9fb;
-            color: #1e293b;
-        }
-        .card {
-            /* FINAL FIX: Using a simple hex color instead of rgba(..., 0.1) to completely eliminate decimal literals and avoid the 'invalid decimal literal' parser error. */
-            box-shadow: 0 4px 12px #9ca3af; 
-            transition: all 0.3s ease;
-        }
-        .header-bg {
-            background: linear-gradient(90deg, #1d4ed8, #3b82f6);
-        }
-        .btn-primary {
-            background-color: #3b82f6;
-            transition: background-color 0.2s;
-        }
-        .btn-primary:hover {
-            background-color: #2563eb;
-        }
-    </style>
+    <!-- Removed custom <style> block to eliminate the 'invalid decimal literal' error source -->
 </head>
-<body class="p-4 sm:p-8 min-h-screen flex items-start justify-center">
+<!-- Applied body styles directly using Tailwind classes -->
+<body class="p-4 sm:p-8 min-h-screen flex items-start justify-center font-sans bg-gray-50 text-gray-800">
 
     <div class="w-full max-w-5xl">
         
-        <!-- Header Section -->
-        <header class="header-bg p-6 rounded-t-xl text-white card">
+        <!-- Header Section: Using bg-gradient and shadow-xl utility classes -->
+        <header class="bg-gradient-to-r from-blue-700 to-blue-500 p-6 rounded-t-xl text-white shadow-xl transition duration-300">
             <h1 class="text-3xl font-bold">Simulated Stock Price Forecast (GBM Model)</h1>
             <p class="mt-1 opacity-90">Generate a 30-day forecast using Geometric Brownian Motion. Weekends are excluded.</p>
         </header>
 
-        <!-- Main Content Card -->
-        <div class="bg-white p-6 sm:p-8 rounded-b-xl card mb-8">
+        <!-- Main Content Card: Using shadow-xl utility classes -->
+        <div class="bg-white p-6 sm:p-8 rounded-b-xl shadow-xl transition duration-300 mb-8">
             
             <!-- Input and Generation -->
             <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8 items-end">
@@ -73,8 +55,8 @@
                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
                 </div>
 
-                <!-- Button -->
-                <button onclick="generateForecast()" class="btn-primary text-white font-semibold py-2 px-6 rounded-lg w-full shadow-md hover:shadow-lg col-span-1">
+                <!-- Button: Using Tailwind classes for primary button styling (bg-blue-500, hover:bg-blue-700) -->
+                <button onclick="generateForecast()" class="bg-blue-500 hover:bg-blue-700 transition duration-200 text-white font-semibold py-2 px-6 rounded-lg w-full shadow-md hover:shadow-lg col-span-1">
                     Run Simulation
                 </button>
             </div>
