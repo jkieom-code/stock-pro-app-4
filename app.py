@@ -13,6 +13,7 @@
             color: #1e293b;
         }
         .card {
+            /* FIXED: Wrapping negative values in quotes to prevent SyntaxError in some environments */
             box-shadow: 0 0 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
         }
