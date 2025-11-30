@@ -8,7 +8,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Load Inter Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <!-- Removed custom <style> block to eliminate the 'invalid decimal literal' error source -->
 </head>
 <!-- Applied body styles directly using Tailwind classes -->
 <body class="p-4 sm:p-8 min-h-screen flex items-start justify-center font-sans bg-gray-50 text-gray-800">
@@ -81,16 +80,13 @@
     </div>
 
     <script>
-        /* Constants for the simulation */
         const TRADING_DAYS_PER_YEAR = 252;
         const TIME_STEP = 1 / TRADING_DAYS_PER_YEAR;
 
-        /* Global utility function for formatting currency */
         const formatCurrency = (amount) => {
             return `$${amount.toFixed(2)}`;
         };
 
-        /* Function to display messages or errors */
         const showMessage = (message, type = 'error') => {
             const box = document.getElementById('message-box');
             box.textContent = message;
@@ -103,12 +99,10 @@
             }
         };
         
-        /* Function to clear messages */
         const clearMessage = () => {
             document.getElementById('message-box').classList.add('hidden');
         };
 
-        /* Generates a Standard Normal Random Variable (Z) using the Box-Muller transform. */
         let storedGaussian = null;
         const getNormalRandom = () => {
             if (storedGaussian !== null) {
@@ -123,7 +117,6 @@
             return z;
         };
 
-        /* Geometric Brownian Motion Formula: P_t = P_{t-1} * exp( (mu - sigma^2 / 2) * dt + sigma * sqrt(dt) * Z ) */
         const simulateDailyPrice = (currentPrice, mu, sigma) => {
             const driftTerm = (mu - (sigma * sigma) / 2) * TIME_STEP;
             const volatilityTerm = sigma * Math.sqrt(TIME_STEP) * getNormalRandom();
@@ -131,11 +124,9 @@
             const exponent = driftTerm + volatilityTerm;
             const newPrice = currentPrice * Math.exp(exponent);
             
-            /* Ensure price is non-negative and round to 2 decimal places */
             return Math.max(1, parseFloat(newPrice.toFixed(2)));
         };
 
-        /* Provides mock fundamental data based on the ticker. */
         function getFundamentalData(ticker) {
             switch (ticker) {
                 case 'TSLA':
@@ -167,13 +158,12 @@
                         "Sector": "Technology",
                         "Industry": "Consumer Electronics",
                         "Forward P/E": "33.56",
-                        "Dividend Yield": "3.70%", /* Fixed the 37.00% typo to 3.70% for realism */
+                        "Dividend Yield": "3.70%",
                         "Beta": "1.11"
                     };
             }
         };
 
-        /* Generates and renders the fundamental data section. */
         function renderFundamentalData(ticker) {
             const data = getFundamentalData(ticker);
             const outputDiv = document.getElementById('fundamental-data-output');
@@ -195,7 +185,6 @@
         }
 
 
-        /* Generates the 30-day stock price forecast using GBM. */
         function generateForecast() {
             clearMessage();
             const priceInput = document.getElementById('initialPrice');
@@ -208,11 +197,9 @@
             const annualReturnPercent = parseFloat(returnInput.value);
             const annualVolatilityPercent = parseFloat(volatilityInput.value);
 
-            /* Convert percentages to decimal for GBM calculation */
             const mu = annualReturnPercent / 100;
             const sigma = annualVolatilityPercent / 100;
 
-            /* Input validation */
             if (isNaN(initialPrice) || initialPrice <= 0) {
                 showMessage("Please enter a valid starting price greater than 0.");
                 return;
@@ -226,7 +213,6 @@
                 return;
             }
 
-            /* Run the fundamental data render first */
             renderFundamentalData(ticker);
 
             const forecastDays = 30;
@@ -235,22 +221,17 @@
             let currentPrice = initialPrice;
             let daysGenerated = 0;
 
-            /* Loop to generate 30 trading days */
             while (daysGenerated < forecastDays) {
-                /* Move to the next day */
                 currentDate.setDate(currentDate.getDate() + 1);
                 
                 const dayOfWeek = currentDate.getDay();
                 
-                /* 0 = Sunday, 6 = Saturday. Skip weekends. */
                 if (dayOfWeek === 0 || dayOfWeek === 6) {
                     continue; 
                 }
 
-                /* Simulate the next day's price using GBM */
                 currentPrice = simulateDailyPrice(currentPrice, mu, sigma);
 
-                /* Format the date for display */
                 const dateString = currentDate.toLocaleDateString('en-US', { 
                     weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' 
                 });
@@ -263,15 +244,12 @@
                 daysGenerated++;
             }
 
-            /* Render the results */
             renderForecastTable(ticker, initialPrice, forecastData);
         }
 
-        /* Renders the forecast data table into the output area. */
         function renderForecastTable(ticker, initialPrice, data) {
             const outputDiv = document.getElementById('forecast-output');
             
-            /* Generate the table header */
             const headerHtml = `
                 <div class="mb-4">
                     <h2 class="text-2xl font-bold text-gray-800">30-Day Simulation for ${ticker}</h2>
@@ -280,14 +258,11 @@
                 </div>
             `;
 
-            /* Generate the table rows */
             const rowsHtml = data.map((item, index) => {
-                /* Calculate daily change relative to the *previous* trading day */
                 const priceChange = index === 0 ? 0 : item.price - data[index - 1].price;
                 const dailyChangeClass = priceChange >= 0 ? 'text-green-600' : 'text-red-600';
                 const dailyIcon = priceChange >= 0 ? '▲' : '▼';
 
-                /* Calculate total change relative to the *initial* price */
                 const totalChange = item.price - initialPrice;
                 const totalChangeClass = totalChange >= 0 ? 'text-green-800' : 'text-red-800';
 
@@ -305,7 +280,6 @@
                 `;
             }).join('');
 
-            /* Assemble the final table structure */
             outputDiv.innerHTML = `
                 ${headerHtml}
                 <div class="overflow-x-auto rounded-lg border border-gray-200">
@@ -326,7 +300,6 @@
             `;
         }
         
-        /* Run the forecast once on page load with default values */
         document.addEventListener('DOMContentLoaded', generateForecast);
 
     </script>
