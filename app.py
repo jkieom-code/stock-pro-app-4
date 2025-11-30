@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -108,10 +107,7 @@
             document.getElementById('message-box').classList.add('hidden');
         };
 
-        /**
-         * Generates a Standard Normal Random Variable (Z) using the Box-Muller transform.
-         * @returns {number} A random number following a normal distribution N(0, 1).
-         */
+        // Generates a Standard Normal Random Variable (Z) using the Box-Muller transform.
         let storedGaussian = null;
         const getNormalRandom = () => {
             if (storedGaussian !== null) {
@@ -126,14 +122,8 @@
             return z;
         };
 
-        /**
-         * Simulates a single day's stock price movement using Geometric Brownian Motion (GBM).
-         * P_t = P_{t-1} * exp( (mu - sigma^2 / 2) * dt + sigma * sqrt(dt) * Z )
-         * * @param {number} currentPrice The price from the previous trading day.
-         * @param {number} mu Expected annual return (drift) as a decimal (e.g., 0.15).
-         * @param {number} sigma Annual volatility as a decimal (e.g., 0.45).
-         * @returns {number} The new, simulated price.
-         */
+        // Simulates a single day's stock price movement using Geometric Brownian Motion (GBM).
+        // Formula: P_t = P_{t-1} * exp( (mu - sigma^2 / 2) * dt + sigma * sqrt(dt) * Z )
         const simulateDailyPrice = (currentPrice, mu, sigma) => {
             const driftTerm = (mu - (sigma * sigma) / 2) * TIME_STEP;
             const volatilityTerm = sigma * Math.sqrt(TIME_STEP) * getNormalRandom();
@@ -145,11 +135,8 @@
             return Math.max(1, parseFloat(newPrice.toFixed(2)));
         };
 
-        /**
-         * Provides mock fundamental data based on the ticker.
-         * In a real application, this would fetch data from an API.
-         */
-        const getFundamentalData = (ticker) => {
+        // Provides mock fundamental data based on the ticker.
+        function getFundamentalData(ticker) {
             switch (ticker) {
                 case 'TSLA':
                     return {
@@ -187,9 +174,7 @@
             }
         };
 
-        /**
-         * Generates and renders the fundamental data section.
-         */
+        // Generates and renders the fundamental data section.
         function renderFundamentalData(ticker) {
             const data = getFundamentalData(ticker);
             const outputDiv = document.getElementById('fundamental-data-output');
@@ -211,9 +196,7 @@
         }
 
 
-        /**
-         * Generates the 30-day stock price forecast using GBM.
-         */
+        // Generates the 30-day stock price forecast using GBM.
         function generateForecast() {
             clearMessage();
             const priceInput = document.getElementById('initialPrice');
@@ -285,9 +268,7 @@
             renderForecastTable(ticker, initialPrice, forecastData);
         }
 
-        /**
-         * Renders the forecast data table into the output area.
-         */
+        // Renders the forecast data table into the output area.
         function renderForecastTable(ticker, initialPrice, data) {
             const outputDiv = document.getElementById('forecast-output');
             
