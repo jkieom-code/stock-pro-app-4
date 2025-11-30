@@ -13,8 +13,8 @@
             color: #1e293b;
         }
         .card {
-            /* FIX: Simplified box-shadow to avoid "invalid decimal literal" error caused by negative values in the build environment */
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            /* FINAL FIX: Using a simple hex color instead of rgba(..., 0.1) to completely eliminate decimal literals and avoid the 'invalid decimal literal' parser error. */
+            box-shadow: 0 4px 12px #9ca3af; 
             transition: all 0.3s ease;
         }
         .header-bg {
