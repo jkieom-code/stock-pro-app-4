@@ -163,7 +163,6 @@
                         "Beta": "1.25"
                     };
                 default:
-                    // Defaulting to the user's requested data structure for fixing the bug
                     return {
                         "Sector": "Technology",
                         "Industry": "Consumer Electronics",
